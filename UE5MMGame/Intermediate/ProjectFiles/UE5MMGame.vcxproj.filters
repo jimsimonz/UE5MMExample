@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\..\UE5MMGame.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{F31BBDD1-B3E8-3BCC-9652-680E16935819}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\UE5MMGame.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\UE5MMGameEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\.vsconfig" />
+    <None Include="..\..\PakDemo.pak" />
+    <Filter Include="Config">
+      <UniqueIdentifier>{FA535FFB-25E1-3D20-B416-52F9BE21E06E}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEditorPerProjectUserSettings.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source\UE5MMGame">
+      <UniqueIdentifier>{A49CE93B-88AC-32CE-9EB2-987EB296030C}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\UE5MMGame\UE5MMGame.Build.cs">
+      <Filter>Source\UE5MMGame</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\UE5MMGame\UE5MMGame.cpp">
+      <Filter>Source\UE5MMGame</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UE5MMGame\UE5MMGame.h">
+      <Filter>Source\UE5MMGame</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UE5MMGame\UE5MMGameCharacter.cpp">
+      <Filter>Source\UE5MMGame</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UE5MMGame\UE5MMGameCharacter.h">
+      <Filter>Source\UE5MMGame</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\UE5MMGame\UE5MMGameGameMode.cpp">
+      <Filter>Source\UE5MMGame</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\UE5MMGame\UE5MMGameGameMode.h">
+      <Filter>Source\UE5MMGame</Filter>
+    </ClInclude>
+    <Filter Include="Source\UE5MMGame\Private">
+      <UniqueIdentifier>{3667F17F-0FF4-3B22-988E-529F2FB939F4}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\UE5MMGame\Private\BFL_Ini.cpp">
+      <Filter>Source\UE5MMGame\Private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\UE5MMGame\Private\BFL_Pak.cpp">
+      <Filter>Source\UE5MMGame\Private</Filter>
+    </ClCompile>
+    <Filter Include="Source\UE5MMGame\Public">
+      <UniqueIdentifier>{27A3B928-B840-3DF2-BC3C-8C1029D7F2F1}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\UE5MMGame\Public\BFL_Ini.h">
+      <Filter>Source\UE5MMGame\Public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\UE5MMGame\Public\BFL_Pak.h">
+      <Filter>Source\UE5MMGame\Public</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
