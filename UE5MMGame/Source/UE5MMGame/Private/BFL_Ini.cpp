@@ -13,6 +13,7 @@
 #include <Kismet/GameplayStatics.h>
 
 #include "UObject/UObjectGlobals.h"
+#include "Engine/World.h"
 
 
 #define MyDebug(x, ...) if(GEngine){GEngine->AddOnScreenDebugMessage(-1, 10.0f, FColor::Yellow, FString::Printf(TEXT(x), ##__VA_ARGS__), false);}
@@ -229,9 +230,16 @@ TArray<FString> UBFL_Ini::GetRegisteredAssetsOfClass(FString Filter)
 
 
 
-TSoftObjectPtr<UWorld> UBFL_Ini::LoadLevelClassReference(FString PakContentPath)
+TSoftObjectPtr<UWorld> UBFL_Ini::LoadLevelClassReference(FString PakContentPath, UObject* world)
 {
-	MyDebug("LoadLevelClassReference file= %s",*PakContentPath)
+	MyDebug("BFL_LoadLevel trying to load = %s", *PakContentPath)
+
+	// Debugging
+	//UWORLD World = GetWorld();
+	//UGameplayStatics::GetAllActorsWithTag();
+	//TAssetPtrObject->IsValidLowLevel()
+	//UGameplayStatics::OpenLevel(world->GetWorld(), *PakContentPath);
+	//return NULL;
 
 
 	FAssetRegistryModule& AssetRegistryModule = FModuleManager::LoadModuleChecked<FAssetRegistryModule>("AssetRegistry");
@@ -245,31 +253,28 @@ TSoftObjectPtr<UWorld> UBFL_Ini::LoadLevelClassReference(FString PakContentPath)
 
 	for (auto& Item : AssetData)
 	{
-		
+		if (*Item.AssetName.ToString() == FName(*PakContentPath))
 		//if (*Item.AssetName.ToString() == FName("PakTest"))
-		if (*Item.AssetName.ToString() == FName("ThirdPersonMap"))
+		//if (*Item.AssetName.ToString() == FName("ThirdPersonMap"))
 		{
-			//UWORLD World = GetWorld();
-			// UGameplayStatics::GetAllActorsWithTag
-			// TAssetPtrObject->IsValidLowLevel()
+			MyDebug("BFL_LoadLevel: Level in registry found = %s", *PakContentPath)
 
-			UObject* NewLevel = Item.GetAsset();
-
+			/*UObject* NewLevel = Item.GetAsset();
 			if (NewLevel != NULL)
 			{
-				NewLevel = StaticLoadObject(UWorld::StaticClass(), NULL, TEXT("ThirdPersonMap"));
-
-				//StaticLoadClass(UObject::StaticClass(), nullptr, *Name);
-				//StaticLoadObject(NewLevel, nullptr, *Name);
-
-				//UGameplayStatics::OpenLevel(NewLevel, FName("PakTest"));
-
-				UGameplayStatics::OpenLevel(NewLevel, FName("ThirdPersonMap"));
-				MyDebug("LoadLevelClassReference OpenLevel = true")
+				MyDebug("BFL_LoadLevel Loading GetAsset() success = %s", *PakContentPath)
+				return NewLevel;
+			}*/
+			
+			//UObject* NewLevel = StaticLoadObject(UWorld::StaticClass(), nullptr, *PakContentPath);
+			//UObject* NewLevel = LoadObject<UWorld>(nullptr, *PakContentPath);
+			//UObject* NewLevel = LoadObject<UWorld>(nullptr, TEXT("/Game/POC/PakTest"));
+			UObject* NewLevel = LoadObject<UWorld>(nullptr, *Item.GetObjectPathString());
+			if (NewLevel != NULL)
+			{
+				MyDebug("BFL_LoadLevel Loading StaticLoadObject() success = %s", *PakContentPath)
+				return NewLevel;
 			}
-
-			MyDebug("LoadLevelClassReference item Pak Test found !!!= %s", *Item.AssetName.ToString())
-			return (TSoftObjectPtr<UWorld>)Item.ToSoftObjectPath(); // FAssetData:
 		}
 	}
 
@@ -299,9 +304,10 @@ TSoftObjectPtr<UWorld> UBFL_Ini::LoadLevelClassReference(FString PakContentPath)
 
 	
 	//return StaticLoadClass(UWorld::StaticClass(), nullptr, TEXT("/Game/mod3/L_mod3Level_C"));
-	return StaticLoadObject(UWorld::StaticClass(), nullptr, TEXT("PakTest"));
+	//return StaticLoadObject(UWorld::StaticClass(), nullptr, TEXT("PakTest"));
 
-	//return NULL;
+	MyDebug("BFL_LoadLevel error")
+	return NULL;
 }
 
 
