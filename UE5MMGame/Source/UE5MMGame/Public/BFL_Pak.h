@@ -46,13 +46,19 @@ public:
 	static FString GetPakMountContentPath(const FString& PakFilePath);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "PAK")
-	static UClass* LoadPakObjClassReference(FString PakContentPath);
+	static UClass* LoadPakObjClassReference(const FString& PakFilePath, FString PakContentPath);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "PAK")
 	static UClass* LoadPakFileClass(const FString& FileName);
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "PAK")
 	static FString Conv_PakContentPathToReferenceString(const FString PakContentPath, const FString PakMountPath);
+
+
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "PAK")
+	static bool IsPakAlreadyMounted(FString PakFilePath);
+
 
 
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "PAK")

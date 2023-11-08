@@ -56,19 +56,24 @@ TArray<FString> UBFL_Ini::GetRegisteredPaths()
 {
 	TArray<FString> List;
 
-	FPakPlatformFile* PakFileMgr = (FPakPlatformFile*)(FPlatformFileManager::Get().FindPlatformFile(TEXT("PakFile")));
-	if (PakFileMgr != nullptr)
+	//TArray<FString> Output;
+	TArray<FString> RootPaths;
+	FPackageName::QueryRootContentPaths(RootPaths);
+
+	List.Add(FString::Printf(TEXT("RootPath: %-40s  MountPoint: %s"), "", ""));
+	for (const auto& RootPath : RootPaths)
 	{
-		//PakFileMgr.
+		FString ContentPath;
+		FPackageName::TryConvertLongPackageNameToFilename(RootPath, ContentPath);
+		//ContentPath = ContentPath.ConvertTabsToSpaces(1);
+		//ContentPath.RemoveSpacesInline();
+		//ContentPath= ContentPath.Replace(TEXT("../"), TEXT("x"));
+		//Output.Emplace(FString::Printf(TEXT("RootPath: %s    -->    %s"), *RootPath, *ContentPath));
+		List.Add(FString::Printf(TEXT("%-40s            %-500s"), *RootPath, *ContentPath));
 	}
 
-	/*
-	FAssetRegistryModule& AssetRegistryModule = FModuleManager::LoadModuleChecked<FAssetRegistryModule>("AssetRegistry");
-
-	IAssetRegistry& AssetRegistry = AssetRegistryModule.Get();
-	AssetRegistry.GetAllCachedPaths(List);
-	*/
-
+	//FFileHelper::SaveStringArrayToFile(Output, *FPaths::Combine(FPaths::ProjectDir(), TEXT("paths.log")));
+	//List.Sort();
 	return List;
 }
 
@@ -259,17 +264,17 @@ TSoftObjectPtr<UWorld> UBFL_Ini::LoadLevelClassReference(FString PakContentPath,
 		{
 			MyDebug("BFL_LoadLevel: Level in registry found = %s", *PakContentPath)
 
-			/*UObject* NewLevel = Item.GetAsset();
+			UObject* NewLevel = Item.GetAsset();
 			if (NewLevel != NULL)
 			{
 				MyDebug("BFL_LoadLevel Loading GetAsset() success = %s", *PakContentPath)
 				return NewLevel;
-			}*/
+			}
 			
 			//UObject* NewLevel = StaticLoadObject(UWorld::StaticClass(), nullptr, *PakContentPath);
 			//UObject* NewLevel = LoadObject<UWorld>(nullptr, *PakContentPath);
 			//UObject* NewLevel = LoadObject<UWorld>(nullptr, TEXT("/Game/POC/PakTest"));
-			UObject* NewLevel = LoadObject<UWorld>(nullptr, *Item.GetObjectPathString());
+			NewLevel = LoadObject<UWorld>(nullptr, *Item.GetObjectPathString());
 			if (NewLevel != NULL)
 			{
 				MyDebug("BFL_LoadLevel Loading StaticLoadObject() success = %s", *PakContentPath)
@@ -306,9 +311,51 @@ TSoftObjectPtr<UWorld> UBFL_Ini::LoadLevelClassReference(FString PakContentPath,
 	//return StaticLoadClass(UWorld::StaticClass(), nullptr, TEXT("/Game/mod3/L_mod3Level_C"));
 	//return StaticLoadObject(UWorld::StaticClass(), nullptr, TEXT("PakTest"));
 
+
+	//UGameplayStatics::OpenLevel(GetWorld(), FName("PakTest"));
 	MyDebug("BFL_LoadLevel error")
 	return NULL;
 }
+
+
+UObject* UBFL_Ini::LoadAssetClassReference(FString PakContentPath)
+{
+	MyDebug("BFL_LoadAsset trying to load = %s", *PakContentPath)
+
+	FAssetRegistryModule& AssetRegistryModule = FModuleManager::LoadModuleChecked<FAssetRegistryModule>("AssetRegistry");
+
+	TArray<FAssetData> AssetData;
+	IAssetRegistry& AssetRegistry = AssetRegistryModule.Get();
+
+	//AssetRegistry.GetAssetsByPackageName(*PakContentPath, AssetData);
+	AssetRegistry.GetAllAssets(AssetData);
+	//AssetRegistry.GetAssetsByClass(FName("World"), AssetData);
+
+	for (auto& Item : AssetData)
+	{
+		if (*Item.AssetName.ToString() == FName(*PakContentPath))
+		{
+			MyDebug("BFL_LoadAsset: Asset in registry found = %s", *PakContentPath)
+
+			UObject* NewAsset = Item.GetAsset();
+			if (NewAsset != NULL)
+			{
+				MyDebug("BFL_LoadAsset Loading GetAsset() success = %s", *PakContentPath)
+					return NewAsset;
+			}
+
+			NewAsset = LoadObject<UObject>(nullptr, *Item.GetObjectPathString());
+			if (NewAsset != NULL)
+			{
+				MyDebug("BFL_LoadAsset Loading StaticLoadObject() success = %s", *PakContentPath)
+					return NewAsset;
+			}
+		}
+	}
+	MyDebug("BFL_LoadAsset error")
+	return NULL;
+}
+
 
 
 /* tmp tmp

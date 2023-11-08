@@ -8,6 +8,7 @@
 #include "HAL/FileManagerGeneric.h"
 #include <Misc/PackageName.h>
 
+
 //#ifndef _WCHAR_T_DEFINED
 //typedef unsigned short wchar_t;
 //#define _WCHAR_T_DEFINED
@@ -29,7 +30,7 @@ bool UBFL_Pak::MountPakFile(const FString& PakFilePath, const FString& PakMountP
 	//MyDebug("MountPakFile pak= %s // point= %s", *PakFilePath,*PakMountPoint)
 
 	//int32 PakOrder = rand();
-	int32 PakOrder = 0;
+	int32 PakOrder = -1;
 	bool bIsMounted = false;
 
 	//Check to see if running in editor
@@ -82,8 +83,10 @@ bool UBFL_Pak::UnmountPakFile(const FString& PakFilePath)
 
 void UBFL_Pak::RegisterMountPoint(const FString& RootPath, const FString& ContentPath)
 {
-	FPackageName::RegisterMountPoint(RootPath, ContentPath);
-	//MyDebug("RegisterMountPoint root= %s // content= %s",*RootPath, *ContentPath)
+	//if (FPackageName::MountPointExists(RootPath) == false)
+		FPackageName::RegisterMountPoint(RootPath, ContentPath);
+
+	MyDebug("RegisterMountPoint root= %s // content= %s",*RootPath, *ContentPath)
 }
 
 void UBFL_Pak::UnRegisterMountPoint(const FString& RootPath, const FString& ContentPath)
@@ -181,20 +184,84 @@ FString UBFL_Pak::GetPakMountContentPath(const FString& PakFilePath)
 	
 }
 
+bool UBFL_Pak::IsPakAlreadyMounted(FString PakFilePath)
+{
+	TArray<FString> List;
+
+	//FString SearchPath = PakFilePath.Replace(TEXT("/"), TEXT("\\"));
+	FString SearchPath = PakFilePath;
+	FPaths::MakePlatformFilename(SearchPath);
+
+	FPakPlatformFile* PakFileMgr = (FPakPlatformFile*)(FPlatformFileManager::Get().FindPlatformFile(TEXT("PakFile")));
+	if (PakFileMgr != nullptr)
+	{
+		PakFileMgr->GetMountedPakFilenames(List);
+		for (auto& Item : List)
+		{
+			//MyDebug("IsPakAlreadyMounted = %s vs %s", *Item, *SearchPath)	
+			if (Item.Equals(SearchPath) == true)
+				return true;
+		}
+	}
+	return false;
+}
+
+
 void UBFL_Pak::MountAndRegisterPak(FString PakFilePath, bool& bIsMountSuccessful)
 {
 	MyDebug("MountAndRegisterPak pak= %s", *PakFilePath)
 
-	FString PakRootPath = "/Game/";
-	if (!PakFilePath.IsEmpty())
+	/*
+	FString OldGameString;
+	TArray<FString> RootPaths;
+	FPackageName::QueryRootContentPaths(RootPaths);
+	for (const auto& RootPath : RootPaths)
 	{
-		if (MountPakFile(PakFilePath, FString()))
+		FString ContentPath;
+		FPackageName::TryConvertLongPackageNameToFilename(RootPath, ContentPath);
+		if (RootPath.Equals(TEXT("/Game/")) == true)
+			OldGameString = ContentPath;
+	}
+	*/
+
+
+	//FString SearchPath = PakFilePath;
+	//FPaths::MakePlatformFilename(SearchPath);
+	//PakFilePath = SearchPath;
+
+	//if (IsPakAlreadyMounted(PakFilePath) == false)
+	{
+		//FString PakRootPath = "/Game/Mods/";
+		FString PakRootPath = "/Game/";
+
+		/*
+		FString onePath, twoPath;
+		FString tmp = PakFilePath;
+		tmp.Split("/Content/Mods/", &onePath, &twoPath);
+
+		//MyDebug("ACHTUNG %s %s %s", *tmp, *onePath, *twoPath)
+		tmp = twoPath;
+		tmp.Split(".pak", &onePath, &twoPath);
+
+		PakRootPath.Append(onePath);
+		PakRootPath.Append("/");
+		*/
+
+
+		if (!PakFilePath.IsEmpty())
 		{
-			bIsMountSuccessful = true;
-			const FString MountPoint = GetPakMountContentPath(PakFilePath);
-			RegisterMountPoint(PakRootPath, MountPoint);
+			if (MountPakFile(PakFilePath, FString()))
+			{
+				bIsMountSuccessful = true;
+				const FString MountPoint = GetPakMountContentPath(PakFilePath);
+				RegisterMountPoint(PakRootPath, MountPoint);
+
+				MyDebug("MountAndRegisterPak pak successfully mounted! [%s -> %s]", *PakRootPath,*MountPoint)
+			}
 		}
 	}
+	//else
+	//	MyDebug("MountAndRegisterPak pak already mounted! %s", *PakFilePath)
 }
 
 void UBFL_Pak::UnmountAndUnregisterPak(FString PakFilePath, bool& bIsMountSuccessful)
@@ -214,11 +281,27 @@ void UBFL_Pak::UnmountAndUnregisterPak(FString PakFilePath, bool& bIsMountSucces
 }
 
 
-UClass* UBFL_Pak::LoadPakObjClassReference(FString PakContentPath)
+UClass* UBFL_Pak::LoadPakObjClassReference(const FString& PakFilePath, FString PakContentPath)
 {
 	//MyDebug("LoadPakObjClassReference pak= %s",*PakContentPath)
 
+	//FString PakRootPath = "/Game/Mods/";
 	FString PakRootPath = "/Game/";
+
+	/*
+	FString onePath, twoPath;
+	FString tmp = PakFilePath;
+	tmp.Split("/Content/Mods/", &onePath, &twoPath);
+
+	//MyDebug("ACHTUNG %s %s %s", *tmp, *onePath, *twoPath)
+	tmp = twoPath;
+	tmp.Split(".pak", &onePath, &twoPath);
+
+	PakRootPath.Append(onePath);
+	PakRootPath.Append("/");
+	*/
+
+
 	const FString FileName = Conv_PakContentPathToReferenceString(PakContentPath, PakRootPath);
 	return LoadPakFileClass(FileName);
 }
@@ -373,7 +456,13 @@ struct DirectoryVisitor : public IPlatformFile::FDirectoryVisitor
 
 			FString tmp = FString::Printf(TEXT("%s"), FilenameOrDirectory);
 			if (tmp.Contains(".pak"))
+			{
+				//FString SearchPath = tmp;
+				//FPaths::MakePlatformFilename(SearchPath);
+				//Files.Add(SearchPath);
+
 				Files.Add(tmp);
+			}
 
 			//Files.Add(FString::Printf(TEXT("%s"), FilenameOrDirectory));
 		}
