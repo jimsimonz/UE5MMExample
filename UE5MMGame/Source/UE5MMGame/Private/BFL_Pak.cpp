@@ -30,7 +30,7 @@ bool UBFL_Pak::MountPakFile(const FString& PakFilePath, const FString& PakMountP
 	//MyDebug("MountPakFile pak= %s // point= %s", *PakFilePath,*PakMountPoint)
 
 	//int32 PakOrder = rand();
-	int32 PakOrder = -1;
+	int32 PakOrder = 0;
 	bool bIsMounted = false;
 
 	//Check to see if running in editor
@@ -250,13 +250,24 @@ void UBFL_Pak::MountAndRegisterPak(FString PakFilePath, bool& bIsMountSuccessful
 
 		if (!PakFilePath.IsEmpty())
 		{
-			if (MountPakFile(PakFilePath, FString()))
+			if (IsPakAlreadyMounted(PakFilePath) == false)
+			{ 
+				if (MountPakFile(PakFilePath, FString()))
+				{
+					bIsMountSuccessful = true;
+					const FString MountPoint = GetPakMountContentPath(PakFilePath);
+					RegisterMountPoint(PakRootPath, MountPoint);
+
+					MyDebug("MountAndRegisterPak pak successfully mounted! [%s -> %s]", *PakRootPath, *MountPoint)
+				}
+			}
+			else
 			{
 				bIsMountSuccessful = true;
 				const FString MountPoint = GetPakMountContentPath(PakFilePath);
 				RegisterMountPoint(PakRootPath, MountPoint);
 
-				MyDebug("MountAndRegisterPak pak successfully mounted! [%s -> %s]", *PakRootPath,*MountPoint)
+				MyDebug("MountAndRegisterPak pak successfully mounted! [%s -> %s]", *PakRootPath, *MountPoint)
 			}
 		}
 	}
@@ -271,7 +282,7 @@ void UBFL_Pak::UnmountAndUnregisterPak(FString PakFilePath, bool& bIsMountSucces
 	FString PakRootPath = "/Game/";
 	if (!PakFilePath.IsEmpty())
 	{
-		if (UnmountPakFile(PakFilePath))
+		//if (UnmountPakFile(PakFilePath))
 		{
 			bIsMountSuccessful = true;
 			const FString MountPoint = GetPakMountContentPath(PakFilePath);

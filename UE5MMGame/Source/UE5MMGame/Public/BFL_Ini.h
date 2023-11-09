@@ -42,6 +42,8 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "INI")
 	static TArray<FString> GetRegisteredAssetsOfClass(FString Filter);
 
+	UFUNCTION(BlueprintCallable, Category = "INI")
+	static TArray<FString> GetRegisteredPlugins();
 
 
 	UFUNCTION(BlueprintCallable, Category = "INI")
