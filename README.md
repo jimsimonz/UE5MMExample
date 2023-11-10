@@ -6,7 +6,7 @@ This is intended as a long-term project and I will expand the functionality as m
 And hopefully this will spare other developers the headaches surrounding unreal and modding. 
 And probably hundreds of hours of research too. 
 
-I expect to upload polished version 1 of the project by the end of this year.
+I expect to upload a polished version 1 of the project by the end of this year.
 
 https://forums.unrealengine.com/t/ue5-mod-manager/1329604/19
 
