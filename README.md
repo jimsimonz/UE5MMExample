@@ -10,15 +10,18 @@ I expect to upload version 1 of the project by the end of this year.
 
 https://forums.unrealengine.com/t/ue5-mod-manager/1329604/19
 
-Screenshots:
+Main game level with spawned mod actors:
 ![ue5mm001](https://github.com/paterron/UE5MMExample/assets/144678263/cb5d2210-2566-40b1-8473-0697fd142a7e)
 
+Mod level with main game player character:
 ![ue5mm004](https://github.com/paterron/UE5MMExample/assets/144678263/16a08e96-8fae-4649-98ce-e254063be06f)
 
+Mod manager ui:
 ![ue5mm002](https://github.com/paterron/UE5MMExample/assets/144678263/a5816154-b285-4c57-8f19-fcdfbc3d95af)
 
 ![ue5mm003](https://github.com/paterron/UE5MMExample/assets/144678263/ea89e5f5-88de-48ab-87ae-3d1de75568ba)
 
+Debug ui:
 ![ue5mm005](https://github.com/paterron/UE5MMExample/assets/144678263/9b112ade-282b-4bbc-b225-4ff73ab087de)
 
 ![ue5mm006](https://github.com/paterron/UE5MMExample/assets/144678263/311b03ab-b12c-4886-8417-c6e81b6899ab)
