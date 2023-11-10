@@ -1,5 +1,5 @@
 # UE5MMExample
-A ready to go Unreal Engine 5 Mod Manager Example Project.
+A ready to use Unreal Engine 5 Mod Manager Example Project.
 (UE version 5.3.2)
 
 This is intended as a long-term project and I will expand the functionality as my free time allows. 
