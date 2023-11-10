@@ -324,6 +324,40 @@ TSoftObjectPtr<UWorld> UBFL_Ini::LoadLevelClassReference(FString PakContentPath,
 		}
 	}
 	
+	// Spawn Level Class
+	FString LevelClass;
+	LevelClass.Append(PakContentPath);
+	LevelClass.Append(".");
+	LevelClass.Append(PakContentPath);
+	LevelClass.Append(".");
+	LevelClass.Append(PakContentPath);
+	LevelClass.Append(".");
+	LevelClass.Append(PakContentPath);
+	LevelClass.Append("_C");
+
+	
+	UObject* NewLevel = StaticLoadClass(UObject::StaticClass(), nullptr, *LevelClass);
+	if (NewLevel != NULL)
+	{
+		MyDebug("BFL_LoadLevel creating LevelClass success = %s", *LevelClass)
+			return NewLevel;
+	}
+	else
+		MyDebug("BFL_LoadLevel creating LevelClass failed = %s", *LevelClass)
+
+
+
+	// Return virtual object path
+	LevelClass = FString("/Game/Mod2/");
+	LevelClass.Append(PakContentPath);
+	//LevelClass.Append(".");
+	//LevelClass.Append(PakContentPath);
+	//LevelClass.Append("_C");
+
+	MyDebug("BFL_LoadLevel objectPath = %s", *LevelClass)
+	return TSoftObjectPtr<UWorld>(LevelClass);
+
+
 
 
 
