@@ -260,7 +260,7 @@ TArray<FString> UBFL_Ini::GetRegisteredPlugins()
 
 TSoftObjectPtr<UWorld> UBFL_Ini::LoadLevelClassReference(FString PakContentPath, UObject* world)
 {
-	MyDebug("BFL_LoadLevel trying to load = %s", *PakContentPath)
+	//MyDebug("BFL_LoadLevel trying to load = %s", *PakContentPath)
 
 	/*
 	FAssetRegistryModule& AssetRegistryModule = FModuleManager::LoadModuleChecked<FAssetRegistryModule>("AssetRegistry");
@@ -303,12 +303,12 @@ TSoftObjectPtr<UWorld> UBFL_Ini::LoadLevelClassReference(FString PakContentPath,
 		//if (*Item.AssetName.ToString() == FName("PakTest"))
 		//if (*Item.AssetName.ToString() == FName("ThirdPersonMap"))
 		{
-			MyDebug("BFL_LoadLevel: Level in registry found = %s", *PakContentPath)
+			//MyDebug("BFL_LoadLevel: Level in registry found = %s", *PakContentPath)
 
 			UObject* NewLevel = Item.GetAsset();
 			if (NewLevel != NULL)
 			{
-				MyDebug("BFL_LoadLevel Loading GetAsset() success = %s", *PakContentPath)
+				//MyDebug("BFL_LoadLevel Loading GetAsset() success = %s", *PakContentPath)
 				return NewLevel;
 			}
 			
@@ -318,7 +318,7 @@ TSoftObjectPtr<UWorld> UBFL_Ini::LoadLevelClassReference(FString PakContentPath,
 			NewLevel = LoadObject<UWorld>(nullptr, *Item.GetObjectPathString());
 			if (NewLevel != NULL)
 			{
-				MyDebug("BFL_LoadLevel Loading StaticLoadObject() success = %s", *PakContentPath)
+				//MyDebug("BFL_LoadLevel Loading StaticLoadObject() success = %s", *PakContentPath)
 				return NewLevel;
 			}
 		}
@@ -339,11 +339,13 @@ TSoftObjectPtr<UWorld> UBFL_Ini::LoadLevelClassReference(FString PakContentPath,
 	UObject* NewLevel = StaticLoadClass(UObject::StaticClass(), nullptr, *LevelClass);
 	if (NewLevel != NULL)
 	{
-		MyDebug("BFL_LoadLevel creating LevelClass success = %s", *LevelClass)
+		//MyDebug("BFL_LoadLevel creating LevelClass success = %s", *LevelClass)
 			return NewLevel;
 	}
 	else
-		MyDebug("BFL_LoadLevel creating LevelClass failed = %s", *LevelClass)
+	{
+		//MyDebug("BFL_LoadLevel creating LevelClass failed = %s", *LevelClass)
+	}
 
 
 
@@ -354,7 +356,9 @@ TSoftObjectPtr<UWorld> UBFL_Ini::LoadLevelClassReference(FString PakContentPath,
 	//LevelClass.Append(PakContentPath);
 	//LevelClass.Append("_C");
 
-	MyDebug("BFL_LoadLevel objectPath = %s", *LevelClass)
+	//MyDebug("BFL_LoadLevel just by objectPath = %s", *LevelClass)
+
+	//NewLevel = LoadObject<UWorld>(nullptr, *LevelClass);
 	return TSoftObjectPtr<UWorld>(LevelClass);
 
 

@@ -73,5 +73,26 @@
     <ClInclude Include="..\..\Source\UE5MMGame\Public\BFL_Pak.h">
       <Filter>Source\UE5MMGame\Public</Filter>
     </ClInclude>
+    <Filter Include="Plugins">
+      <UniqueIdentifier>{BB38096A-B391-30DC-A0D4-4F3EA6B44507}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Plugins\GameShared">
+      <UniqueIdentifier>{2E5B5B72-2945-3906-9906-3BA37507A60D}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Plugins\GameShared\GameShared.uplugin">
+      <Filter>Plugins\GameShared</Filter>
+    </None>
+    <Filter Include="Plugins\GameShared\Config">
+      <UniqueIdentifier>{4005469C-56FE-371E-A698-222D850BB64B}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Plugins\GameShared\Config\FilterPlugin.ini">
+      <Filter>Plugins\GameShared\Config</Filter>
+    </None>
+    <Filter Include="Plugins\GameShared\Resources">
+      <UniqueIdentifier>{9A50AC34-4D9A-3862-A0A3-B1BF8CA06790}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Plugins\GameShared\Resources\Icon128.png">
+      <Filter>Plugins\GameShared\Resources</Filter>
+    </None>
   </ItemGroup>
 </Project>

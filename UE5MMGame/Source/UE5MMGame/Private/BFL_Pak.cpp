@@ -86,7 +86,7 @@ void UBFL_Pak::RegisterMountPoint(const FString& RootPath, const FString& Conten
 	//if (FPackageName::MountPointExists(RootPath) == false)
 		FPackageName::RegisterMountPoint(RootPath, ContentPath);
 
-	MyDebug("RegisterMountPoint root= %s // content= %s",*RootPath, *ContentPath)
+	//MyDebug("RegisterMountPoint root= %s // content= %s",*RootPath, *ContentPath)
 }
 
 void UBFL_Pak::UnRegisterMountPoint(const FString& RootPath, const FString& ContentPath)
@@ -209,7 +209,7 @@ bool UBFL_Pak::IsPakAlreadyMounted(FString PakFilePath)
 
 void UBFL_Pak::MountAndRegisterPak(FString PakFilePath, bool& bIsMountSuccessful)
 {
-	MyDebug("MountAndRegisterPak pak= %s", *PakFilePath)
+	//MyDebug("MountAndRegisterPak pak= %s", *PakFilePath)
 
 	/*
 	FString OldGameString;
@@ -258,7 +258,7 @@ void UBFL_Pak::MountAndRegisterPak(FString PakFilePath, bool& bIsMountSuccessful
 					const FString MountPoint = GetPakMountContentPath(PakFilePath);
 					RegisterMountPoint(PakRootPath, MountPoint);
 
-					MyDebug("MountAndRegisterPak pak successfully mounted! [%s -> %s]", *PakRootPath, *MountPoint)
+					//MyDebug("MountAndRegisterPak pak successfully mounted! [%s -> %s]", *PakRootPath, *MountPoint)
 				}
 			}
 			else
@@ -267,7 +267,7 @@ void UBFL_Pak::MountAndRegisterPak(FString PakFilePath, bool& bIsMountSuccessful
 				const FString MountPoint = GetPakMountContentPath(PakFilePath);
 				RegisterMountPoint(PakRootPath, MountPoint);
 
-				MyDebug("MountAndRegisterPak pak successfully mounted! [%s -> %s]", *PakRootPath, *MountPoint)
+				//MyDebug("MountAndRegisterPak pak successfully mounted! [%s -> %s]", *PakRootPath, *MountPoint)
 			}
 		}
 	}
@@ -322,7 +322,7 @@ UClass* UBFL_Pak::LoadPakFileClass(const FString& FileName)
 	//MyDebug("LoadPakFileClass file= %s",*FileName)
 
 	const FString Name = FileName + TEXT(".") + FPackageName::GetShortName(FileName) + TEXT("_C");
-	MyDebug("LoadPakFileClass[Class Name]= %s", *Name)
+	//MyDebug("LoadPakFileClass[Class Name]= %s", *Name)
 	return StaticLoadClass(UObject::StaticClass(), nullptr, *Name);
 }
 

@@ -1,8 +1,8 @@
 {
 	"SourceFiles": [
-		"D:\\tmp\\XXXAAAXXX\\UE5MMGame\\Source\\UE5MMGame\\UE5MMGame.Build.cs",
-		"D:\\tmp\\XXXAAAXXX\\UE5MMGame\\Source\\UE5MMGame.Target.cs",
-		"D:\\tmp\\XXXAAAXXX\\UE5MMGame\\Source\\UE5MMGameEditor.Target.cs"
+		"D:\\tmp\\XXXAAAXXX\\UE5MMExample\\UE5MMGame\\Source\\UE5MMGame\\UE5MMGame.Build.cs",
+		"D:\\tmp\\XXXAAAXXX\\UE5MMExample\\UE5MMGame\\Source\\UE5MMGame.Target.cs",
+		"D:\\tmp\\XXXAAAXXX\\UE5MMExample\\UE5MMGame\\Source\\UE5MMGameEditor.Target.cs"
 	],
 	"EngineVersion": "5.3.2"
 }
