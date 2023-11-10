@@ -10,7 +10,7 @@ I expect to upload version 1 of the project by the end of this year.
 
 https://forums.unrealengine.com/t/ue5-mod-manager/1329604/19
 
-Main game level with spawned mod actors:
+Main game level with spawned mod1 and mod2 actors:
 ![ue5mm001](https://github.com/paterron/UE5MMExample/assets/144678263/cb5d2210-2566-40b1-8473-0697fd142a7e)
 
 Mod level with main game player character:
