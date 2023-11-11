@@ -33,5 +33,5 @@ Debug ui:
 Now with working material textures:
 ![ue5mm009](https://github.com/paterron/UE5MMExample/assets/144678263/77fea209-b9fa-48c6-8f14-1b6c37fc9402)
 
-And open world levels:
+And loading open world levels:
 ![ue5mm010](https://github.com/paterron/UE5MMExample/assets/144678263/8b740ed4-32a5-4d0b-8fdf-cc617f687c55)
