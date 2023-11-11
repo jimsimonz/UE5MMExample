@@ -27,7 +27,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{D8AD57F4-8B9E-3700-9478-E9B188467F0F}</ProjectGuid>
+    <ProjectGuid>{58497D87-D731-3749-8A88-CA2125470B7E}</ProjectGuid>
     <RootNamespace>UE5MMGame</RootNamespace>
   </PropertyGroup>
   <Import Project="UECommon.props" />

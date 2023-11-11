@@ -47,8 +47,13 @@ public:
 
 
 	UFUNCTION(BlueprintCallable, Category = "INI")
-	static TSoftObjectPtr<UWorld> LoadLevelClassReference(FString PakContentPath, UObject* world);
+	static TSoftObjectPtr<UWorld> LoadLevelClassReference(const FString& PakFilePath, FString PakContentPath);
 
 	UFUNCTION(BlueprintCallable, Category = "INI")
 	static UObject* LoadAssetClassReference(FString PakContentPath);
+
+
+	UFUNCTION(BlueprintCallable, Category = "INI")
+
+	static void FinishAllCompilation();
 };
